@@ -1,6 +1,6 @@
-## NEXT
+## 5.0.5
 
-* Add iOS unit and UI integration test targets.
+* Fix serverAuthCode on Android & iOS.
 
 ## 5.0.4
 
