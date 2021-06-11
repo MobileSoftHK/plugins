@@ -124,7 +124,7 @@ static FlutterError *getFlutterError(NSError *error) {
       result(error != nil ? getFlutterError(error) : @{
         @"idToken" : authentication.idToken,
         @"accessToken" : authentication.accessToken,
-        @"serverAuthCode" : user.serverAuthCode ?: [NSNull null]
+        @"serverAuthCode" : currentUser.serverAuthCode ?: [NSNull null]
       });
     }];
   } else if ([call.method isEqualToString:@"signOut"]) {
