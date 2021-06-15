@@ -86,7 +86,15 @@ static FlutterError *getFlutterError(NSError *error) {
           [GIDSignIn sharedInstance].clientID = plist[kClientIdKey];
         }
 
-        [GIDSignIn sharedInstance].serverClientID = plist[kServerClientIdKey];
+        BOOL hasDynamicServerClientId =
+                    [[call.arguments valueForKey:@"serverClientId"] isKindOfClass:[NSString class]];
+
+        if (hasDynamicClientId) {
+          [GIDSignIn sharedInstance].serverClientID = [call.arguments valueForKey:@"serverClientId"];
+        } else {
+          [GIDSignIn sharedInstance].serverClientID = plist[kServerClientIdKey];
+        }
+
         [GIDSignIn sharedInstance].scopes = call.arguments[@"scopes"];
         if (call.arguments[@"hostedDomain"] == [NSNull null]) {
           [GIDSignIn sharedInstance].hostedDomain = nil;
