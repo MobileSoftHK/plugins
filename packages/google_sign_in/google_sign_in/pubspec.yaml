@@ -26,9 +26,15 @@ dependencies:
   flutter:
     sdk: flutter
   google_sign_in_platform_interface:
-    path: ../google_sign_in_platform_interface
+    git:
+      url: git://github.com/czernas/plugins
+      path: packages/google_sign_in/google_sign_in_platform_interface
+      ref: fix-server-auth-code-get-token
   google_sign_in_web:
-    path: ../google_sign_in_web
+    git:
+      url: git://github.com/czernas/plugins
+      path: packages/google_sign_in/google_sign_in_web
+      ref: fix-server-auth-code-get-token
   meta: ^1.3.0
 
 dev_dependencies:
