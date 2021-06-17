@@ -137,8 +137,7 @@ public class GoogleSignInPlugin implements MethodCallHandler, FlutterPlugin, Act
         List<String> requestedScopes = call.argument("scopes");
         String hostedDomain = call.argument("hostedDomain");
         String clientId = call.argument("clientId");
-        String serverClientId = call.argument("serverClientId");
-        delegate.init(result, signInOption, requestedScopes, hostedDomain, clientId, serverClientId);
+        delegate.init(result, signInOption, requestedScopes, hostedDomain, clientId);
         break;
 
       case METHOD_SIGN_IN_SILENTLY:
@@ -194,8 +193,7 @@ public class GoogleSignInPlugin implements MethodCallHandler, FlutterPlugin, Act
         String signInOption,
         List<String> requestedScopes,
         String hostedDomain,
-        String clientId,
-        String serverClientId);
+        String clientId);
 
     /**
      * Returns the account information for the user who is signed in to this app. If no user is
@@ -320,8 +318,7 @@ public class GoogleSignInPlugin implements MethodCallHandler, FlutterPlugin, Act
         String signInOption,
         List<String> requestedScopes,
         String hostedDomain,
-        String clientId,
-        String serverClientId) {
+        String clientId) {
       try {
         GoogleSignInOptions.Builder optionsBuilder;
 
@@ -348,12 +345,9 @@ public class GoogleSignInPlugin implements MethodCallHandler, FlutterPlugin, Act
                 .getIdentifier("default_web_client_id", "string", context.getPackageName());
         if (!Strings.isNullOrEmpty(clientId)) {
           optionsBuilder.requestIdToken(clientId);
+          optionsBuilder.requestServerAuthCode(clientId);
         } else if (clientIdIdentifier != 0) {
           optionsBuilder.requestIdToken(context.getString(clientIdIdentifier));
-        }
-        if (!Strings.isNullOrEmpty(serverClientId)) {
-          optionsBuilder.requestServerAuthCode(serverClientId);
-        } else if (clientIdIdentifier != 0) {
           optionsBuilder.requestServerAuthCode(context.getString(clientIdIdentifier));
         }
         for (String scope : requestedScopes) {
