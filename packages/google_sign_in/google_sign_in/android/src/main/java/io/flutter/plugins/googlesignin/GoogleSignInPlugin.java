@@ -194,7 +194,8 @@ public class GoogleSignInPlugin implements MethodCallHandler, FlutterPlugin, Act
         String signInOption,
         List<String> requestedScopes,
         String hostedDomain,
-        String clientId);
+        String clientId,
+        String serverClientId);
 
     /**
      * Returns the account information for the user who is signed in to this app. If no user is
