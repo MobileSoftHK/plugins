@@ -48,17 +48,36 @@
   }
 }
 
+- (NSString*)findNetworkInfo:(NSString*)key {
+  NSString* info = nil;
+  NSArray* interfaceNames = (__bridge_transfer id)CNCopySupportedInterfaces();
+  for (NSString* interfaceName in interfaceNames) {
+    NSDictionary* networkInfo =
+        (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName);
+    if (networkInfo[key]) {
+      info = networkInfo[key];
+    }
+  }
+  return info;
+}
+
+- (NSString*)getWifiName {
+  return [self findNetworkInfo:@"SSID"];
+}
+
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
   if ([call.method isEqualToString:@"check"]) {
-    // This is supposed to be quick. Another way of doing this would be to
-    // signup for network
-    // connectivity changes. However that depends on the app being in background
-    // and the code
-    // gets more involved. So for now, this will do.
-    result([self statusFromReachability:[Reachability reachabilityForInternetConnection]]);
-  } else {
-    result(FlutterMethodNotImplemented);
-  }
+      // This is supposed to be quick. Another way of doing this would be to
+      // signup for network
+      // connectivity changes. However that depends on the app being in background
+      // and the code
+      // gets more involved. So for now, this will do.
+      result([self statusFromReachability:[Reachability reachabilityForInternetConnection]]);
+    } else if ([call.method isEqualToString:@"wifiName"]) {
+      result([self getWifiName]);
+    } else {
+      result(FlutterMethodNotImplemented);
+    }
 }
 
 - (void)onReachabilityDidChange:(NSNotification*)notification {

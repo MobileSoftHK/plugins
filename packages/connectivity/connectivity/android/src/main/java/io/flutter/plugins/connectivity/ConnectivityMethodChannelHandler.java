@@ -31,6 +31,9 @@ class ConnectivityMethodChannelHandler implements MethodChannel.MethodCallHandle
       case "check":
         result.success(connectivity.getNetworkType());
         break;
+      case "wifiName":
+        result.success(connectivity.getWifiName());
+        break;
       default:
         result.notImplemented();
         break;

@@ -7,14 +7,17 @@ package io.flutter.plugins.connectivity;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 
 /** Reports connectivity related information such as connectivity type and wifi information. */
 public class Connectivity {
   private ConnectivityManager connectivityManager;
+  private WifiManager wifiManager;
 
-  public Connectivity(ConnectivityManager connectivityManager) {
+  public Connectivity(ConnectivityManager connectivityManager, WifiManager wifiManager) {
     this.connectivityManager = connectivityManager;
+    this.wifiManager = wifiManager;
   }
 
   String getNetworkType() {
@@ -34,6 +37,18 @@ public class Connectivity {
     }
 
     return getNetworkTypeLegacy();
+  }
+
+  String getWifiName() {
+    WifiInfo wifiInfo = getWifiInfo();
+    String ssid = null;
+    if (wifiInfo != null) ssid = wifiInfo.getSSID();
+    if (ssid != null) ssid = ssid.replaceAll("\"", ""); // Android returns "SSID"
+    return ssid;
+  }
+
+  private WifiInfo getWifiInfo() {
+    return wifiManager == null ? null : wifiManager.getConnectionInfo();
   }
 
   @SuppressWarnings("deprecation")
