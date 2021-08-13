@@ -45,4 +45,14 @@ class Connectivity {
   Future<ConnectivityResult> checkConnectivity() {
     return _platform.checkConnectivity();
   }
+
+  /// Obtains the wifi name (SSID) of the connected network
+  ///
+  /// Please note that it DOESN'T WORK on emulators (returns null).
+  ///
+  /// From android 8.0 onwards the GPS must be ON (high accuracy)
+  /// in order to be able to obtain the SSID.
+  Future<String?> getWifiName() {
+    return _platform.getWifiName();
+  }
 }
