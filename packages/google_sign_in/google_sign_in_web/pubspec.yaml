@@ -23,7 +23,7 @@ dependencies:
     sdk: flutter
   google_sign_in_platform_interface:
     git:
-      url: git://github.com/czernas/plugins
+      url: git://github.com/MobileSoftHK/plugins
       path: packages/google_sign_in/google_sign_in_platform_interface
       ref: fix-server-auth-code-get-token
   js: ^0.6.3
